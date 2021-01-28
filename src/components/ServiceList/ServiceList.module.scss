@@ -7,3 +7,26 @@ body{
     margin: 0;
     color: #fff;
 }
+
+.emptyModal {
+        min-height: 50px;
+        font-size: 24px;
+        color: #000;
+        padding: 16px 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #fff;
+        border-radius: 2px;
+        box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.5);
+}
+
+.grid{
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+
+    & > div{
+        flex: 1 1 100%;
+    }
+}

@@ -1,9 +1,9 @@
 import React from 'react';
 import MyInput from '../../MyInput';
 import PropTypes from 'prop-types';
-import st from './ServiceForm.module.scss';
+import st from './WorkdaysForm.module.scss';
 import Formsy, { addValidationRule } from 'formsy-react'
-
+import classNames from 'classnames';
 import { useState } from 'react';
 
 const errors = {
@@ -13,15 +13,19 @@ const errors = {
     isAlpha: 'You can only type letters',
     equalsField: 'Password is not match',
     isStrong: 'Your password is not strong',
-    isNumeric: "Чувак, введи число"
+    isNumeric: "Целое число от 0-24"
 }
 
-class ServiceForm extends React.Component {
+class WorkdaysForm extends React.Component {
 
     state = {
-        title: '',
-        time: '',
-        price: '',
+        monday: { start: null, end: null },
+        tuesday: { start: null, end: null },
+        wednesday: { start: null, end: null },
+        thursday: { start: null, end: null },
+        friday: { start: null, end: null },
+        saturday: { start: null, end: null },
+        sunday: { start: null, end: null },
         canSubmit: false
     };
     handleChange = (e) => {
@@ -58,13 +62,12 @@ class ServiceForm extends React.Component {
         console.log("form posted", model)
     }
     onSubmit = (model) => {
-        
-        const { addService } = this.props;
+        // const { addService } = this.props;
         console.table(model);
-        console.table();
+        // console.table();
 
-        addService(model);
-        console.log("form posted", model)
+        // addService(model);
+        // console.log("form posted", model)
     }
 
     handler = (e) => {
@@ -87,14 +90,63 @@ class ServiceForm extends React.Component {
                 break;
         }
     }
+
+    mapInputs = (inputs) => {
+        const arr = [Object.entries(inputs)].sort((a, b) => a - b);
+        const workDays = [
+            'monday',
+            'tuesday',
+            'wednesday',
+            'thursday',
+            'friday',
+            'saturday',
+            'sunday'
+        ];
+        const newArr = workDays.map((w) => {
+            const obj = { title: w, st: null, end: null};
+            arr[0].forEach(a => {
+                if(a[0] === `${w}-st`) {
+                    obj.st = a[1];
+                    return;
+                }
+                else if(a[0] === `${w}-end`){
+                    obj.end= a[1];
+                    return;
+                }
+            })
+            return obj;
+        })
+        return ({
+            ...newArr
+        })
+    }
     render() {
         const { isEdit } = this.props;
+        const workDays = [
+            'monday',
+            'tuesday',
+            'wednesday',
+            'thursday',
+            'friday',
+            'saturday',
+            'sunday'
+        ];
+
         return (
             <>
-                <Formsy className='form' onValidSubmit={isEdit ? this.onSubmitEdit : this.onSubmit} onValid={this.enableButton} onInvalid={this.disableButton} className={st.grid}>
-                    <MyInput label="Название услуги" type="text" name="title" validations="isWords" validationErrors={errors} placeholder="Введите название..." required />
-                    <MyInput label="Длительность" type="text" name="time" validations="isNumeric" validationErrors={errors} placeholder="Введите название..." required />
-                    <MyInput label="Стоимость" type="text" name="price" validations="isNumeric" validationErrors={errors} placeholder="Введите название..." required />
+                <Formsy className='form' mapping={this.mapInputs} onValidSubmit={isEdit ? this.onSubmitEdit : this.onSubmit} onValid={this.enableButton} onInvalid={this.disableButton} className={st.grid}>
+                    {workDays.map((w, i) => {
+                        return (
+                            <div key={i}>
+                                <p className={classNames(`${st.title}`)}>{w}</p>
+                                <div className={classNames(`${st.flex}`, `${st.field}`)}>
+                                    <MyInput label="C" type="text" name={`${w}-st`} validations="isNumeric" validationErrors={errors} placeholder="" required />
+                                    <MyInput label="До" type="text" name={`${w}-end`} validations="isNumeric" validationErrors={errors} placeholder="" required />
+                                </div>
+                            </div>
+                        )
+
+                    })}
                     {isEdit ?
                         <div className={st.flex}>
                             <button type="submit" data-type="confirm" className={st.btn} disabled={!this.state.canSubmit}>
@@ -111,15 +163,15 @@ class ServiceForm extends React.Component {
     }
 }
 // onClick={this.props.handler}
-// ServiceForm.propTypes = {
+// WorkdaysForm.propTypes = {
 //     title: PropTypes.string.isRequired,
 //     time: PropTypes.number.isRequired,
 //     price: PropTypes.number.isRequired,
 // }
-// ServiceForm.propTypes = {
+// WorkdaysForm.propTypes = {
 //     title: PropTypes.string.isRequired,
 //     completed: PropTypes.bool.isRequired,
 //     toggleCompleted: PropTypes.func.isRequired,
 //     // id: PropTypes.number.isRequired
 // }
-export default ServiceForm;
+export default WorkdaysForm;

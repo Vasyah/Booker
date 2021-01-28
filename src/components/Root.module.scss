@@ -5,8 +5,12 @@ html {
     font-family: "Open Sans Condensed", sans-serif;
 }
 
+$azure-color: #98d0c2;
+$blue-color: #4d5284;
+$purple-color: #9794c4;
 .wrapper {
     min-height: 100vh;
     background: #50a3a2;
-    background: linear-gradient(to bottom right, #50a3a2 0%, #53e3a6 100%);
+    background: linear-gradient(to bottom right, $azure-color 40%, $purple-color 100%);
+    padding: 16px;
 }

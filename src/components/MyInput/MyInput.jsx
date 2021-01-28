@@ -9,12 +9,12 @@ class MyInput extends React.Component {
         this.props.setValue(e.target.value)
     }
     render() {
-        const { label, name, type, value, errorMessage } = this.props;
+        const { label, name, type, value, errorMessage, clName } = this.props;
         return (
             <div className="input-row">
                 <label className={st.label}>{label}</label>
                 <input
-                    className={classNames(`${st.input}`, {[`${st.sizeXS}`]: name==="time" || name==="price"})}
+                    className={classNames(`${st.input}`, {[`${st.sizeXS}`]: name==="time" || name==="price"}, `${clName}`)}
                     name={name}
                     value={value || ''}
                     onChange={this.handleChange}

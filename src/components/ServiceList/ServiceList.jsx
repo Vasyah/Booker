@@ -33,28 +33,33 @@ class ServiceList extends React.Component {
     editService = (service) => {
         console.log(service);
         axiosConfig
-            .post('/services', service)
+            .patch(`/services/${service.id}`, service)
             .then(res => {
-                console.log(res);
                 const serviceData = res.data.data;
                 const { id } = serviceData;
-                this.setState(prevState => ({
-                    services: [
-                        prevState.services.forEach(service => {
-                            const isExist = service.id === id
-                            if (isExist) {
-                                service = serviceData;
-                            }
-                            return service
-                        }),
-                    ]
-                }));
+                const newState = this.state.services.map((s) => {
+                    if (s.id === id) return s = serviceData;
+                    return s;
+                });
+                this.setState({
+                    services: [...newState]
+                });
                 if (res.status === "OK") return true;
-            })
+            });
     }
-    // rmService() {
+    deleteService = (id) => {
+        const data = { id };
+        axiosConfig
+            .delete(`/services/${id}`)
+            .then(res => {
+                const newState = this.state.services.filter((s) => {
+                    return s.id !== id;
+                });
+                newState.length ? this.setState({ services: [...newState] }) :
+                    this.setState({ services: [] });
+            });
 
-    // }
+    }
     // saveService() {
 
     // }
@@ -69,23 +74,31 @@ class ServiceList extends React.Component {
 
     render() {
         return (
-            <div className="">
+            <div className={st.container}>
                 <h3 className={st.title}>Добавьте свои услуги</h3>
                 <ServiceForm addService={this.addService} />
-                <Service
-                    title="Название услуги"
-                    time="Длительность"
-                    price="Стоимость"
-                />
-                {this.state.services.map(({ id, title, time, price }) => (
+                <div className={st.grid}>
                     <Service
-                        isEdit={true}
-                        title={title}
-                        time={time}
-                        price={price}
-                        key={id}
+                        isEditable={false}
+                        title="Название услуги"
+                        time="Длительность"
+                        price="Стоимость"
                     />
-                ))}
+                    {this.state.services.length === 0 && <div className={st.emptyModal}>"ЭТО ПУСТОЕ СООБЩЕНИЕ"</div>}
+                    {this.state.services.map(({ id, title, time, price }) => (
+                        <Service
+                            deleteService={this.deleteService}
+                            editService={this.editService}
+                            isEditable={true}
+                            isEdit={true}
+                            title={title}
+                            time={time}
+                            price={price}
+                            key={id}
+                            id={id}
+                        />
+                    ))}
+                </div>
                 {/* <saveButton/> */}
             </div>
         )

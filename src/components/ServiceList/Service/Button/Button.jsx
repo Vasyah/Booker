@@ -9,12 +9,24 @@ class Button extends React.Component {
         this.state = { props }
     }
 
-    render() {
-        const { type, label } = this.props;
-        return (
-            <button className={classNames(`${st.btn}`, { [`btn__${type}`]: true })}>{label}</button>
-        )
+    handleClick = (event) => {
+        const { btnType } = this.props; 
+        switch (btnType){
+            case 'edit':
+                break;
+            case 'delete':
+                break;
+            default:
+                break;
+        }
     }
-}
+        render() {
+            const { type, label } = this.props;
+            const { handleClick } = this.props;
+            return (
+                <button onClick={handleClick} className={classNames(`${st.btn}`, { [`btn__${type}`]: true })}>{label}</button>
+            )
+        }
+    }
 
-export default Button;
+    export default Button;

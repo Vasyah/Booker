@@ -1,12 +1,12 @@
 .grid {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr;
     grid-template-rows: 1fr;
     margin: 0 auto;
     max-width: 450px;
     width: 100%;
     gap: 10px;
-    
+
     & > div {
     }
 }
@@ -16,7 +16,20 @@ input {
     width: 100%;
     padding: 0;
 }
-.flex{
+
+.title {
+    font-size: 24px;
+    font-weight: bold;
+}
+.field {
+    & input {
+        max-width: 50px;
+    }
+    & > div {
+        margin: 20px;
+    }
+}
+.flex {
     display: flex;
 }
 .btn {
@@ -41,8 +54,8 @@ input {
     transition: 0.3s;
     margin-bottom: 20px;
     cursor: pointer;
-    
-    &:disabled{
+
+    &:disabled {
         background: rgb(134, 134, 134);
         color: #222;
         cursor: default;

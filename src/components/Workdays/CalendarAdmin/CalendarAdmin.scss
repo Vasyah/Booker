@@ -1,0 +1,12 @@
+$azure-color: #98d0c2;
+$blue-color: #4d5284;
+$purple-color: #9794c4;
+$nice-dates-color-gray-dark: #000;
+$nice-dates-color-gray: #fff;
+$nice-dates-color-gray-light: #ddd;
+$nice-dates-color-accent: $nice-dates-color-gray-dark;
+$nice-dates-font-size-small: 14px;
+$nice-dates-font-size-base: 15px;
+$nice-dates-font-size-big: 16px;
+
+@import 'react-nice-dates/src/style.scss';
