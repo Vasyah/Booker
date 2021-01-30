@@ -5,6 +5,9 @@ import st from './ServiceForm.module.scss';
 import Formsy, { addValidationRule } from 'formsy-react'
 
 import { useState } from 'react';
+import { connect } from 'react-redux';
+import { addService } from "./../../store/actions/addService";
+import { editService } from "./../../store/actions/editService";
 
 const errors = {
     isEmail: 'You have to type a valid email',
@@ -32,12 +35,12 @@ class ServiceForm extends React.Component {
     addService = () => {
         const data = this.state;
         const { addService } = this.props;
+        addService(data);
         this.setState({
             title: '',
             time: '',
             price: ''
         });
-        addService(data);
     }
 
     disableButton = () => {
@@ -53,18 +56,12 @@ class ServiceForm extends React.Component {
         model.id = this.props.id;
         const { editToggle } = this.props;
         editToggle();
-        this.setState({ isEdit: false });
         editService(model)
-        console.log("form posted", model)
+        this.setState({ isEdit: false });
     }
     onSubmit = (model) => {
-        
         const { addService } = this.props;
-        console.table(model);
-        console.table();
-
         addService(model);
-        console.log("form posted", model)
     }
 
     handler = (e) => {
@@ -110,16 +107,17 @@ class ServiceForm extends React.Component {
         )
     }
 }
-// onClick={this.props.handler}
-// ServiceForm.propTypes = {
-//     title: PropTypes.string.isRequired,
-//     time: PropTypes.number.isRequired,
-//     price: PropTypes.number.isRequired,
-// }
-// ServiceForm.propTypes = {
-//     title: PropTypes.string.isRequired,
-//     completed: PropTypes.bool.isRequired,
-//     toggleCompleted: PropTypes.func.isRequired,
-//     // id: PropTypes.number.isRequired
-// }
-export default ServiceForm;
+
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        addService: service => dispatch(addService(service)),
+        editService: service => dispatch(editService(service)),
+    }
+}
+const ServiceForm_W = connect(null, mapDispatchToProps)(ServiceForm);
+export default ServiceForm_W;
+
+
+
+

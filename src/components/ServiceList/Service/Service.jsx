@@ -3,8 +3,11 @@ import PropTypes from 'prop-types';
 import st from './Service.module.scss';
 
 import Button from './Button';
-import ServiceForm from '../ServiceForm';
 import classNames from 'classnames';
+
+import { connect } from "react-redux";
+import { deleteService } from "./../../store/actions/deleteService";
+import ServiceForm_W from "./../ServiceForm/ServiceForm";
 class Service extends React.Component {
     state = { isEdit: false };
     editToggle = (e) => {
@@ -17,12 +20,11 @@ class Service extends React.Component {
     }
 
     render() {
-        const { title, time, price, editService, id } = this.props;
+        const { title, time, price, id, isEditable } = this.props;
         const { isEdit } = this.state;
-        const { isEditable } = this.props;
         return (
             <>
-                {isEdit ? <ServiceForm editToggle={this.editToggle} id={id} editService={editService} isEdit={isEdit} handler={this.handler} /> :
+                {isEdit ? <ServiceForm_W editToggle={this.editToggle} id={id} isEdit={isEdit} handler={this.handler} /> :
                     <div className={classNames(`${st.flex}`, `${st.flexAC}`)}>
                         <div className={st.grid} >
                             <div className="">{title}</div>
@@ -35,17 +37,19 @@ class Service extends React.Component {
                             </span>
                         </div>
                     </div>
-                }
 
+                }
             </>
         )
     }
 }
-
-Service.propTypes = {
-    // title: PropTypes.string.isRequired,
-    // time: PropTypes.number.isRequired,
-    // price: PropTypes.number.isRequired,
-    // id: PropTypes.number.isRequired
+const mapDispatchToProps = (dispatch) => {
+    return {
+        deleteService: (id) => {
+            dispatch(deleteService(id));
+        }
+    }
 }
-export default Service;
+const Service_w = connect(null, mapDispatchToProps)(Service);
+export default Service_w;
+

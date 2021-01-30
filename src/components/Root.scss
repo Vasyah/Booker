@@ -1,4 +1,9 @@
 $azure-color: #98d0c2;
-$blue-color: #4d5284;
-$purple-color: #9794c4;
+$blue-color: #6871d1;
+$purple-color: #9b95f0;
 
+.input-row{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

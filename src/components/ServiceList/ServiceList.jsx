@@ -2,53 +2,18 @@ import React from 'react';
 import st from './ServiceList.module.scss';
 
 import Service from './Service';
-import ServiceForm from './ServiceForm';
+import ServiceForm_W from './ServiceForm';
 // import Button from './../Button'
 import classNames from 'classnames';
 import axiosConfig from '../../api/';
-
+import { connect } from 'react-redux';
+import { addService } from "./../store/actions/addService";
+import { getServices } from "./../store/actions/getServices";
+import MyLoader from "./../MyLoader/MyLoader";
 class ServiceList extends React.Component {
-
-    state = { services: [] };
-    // для сохранения контекста делаем метод - стрелочной функцией
-    addService = (service) => {
-        // если хотя бы одно поле пустое - то не пишем
-        // задать типы
-        console.log(service);
-        axiosConfig
-            .post('/services', service)
-            .then(res => {
-                console.log(res);
-                const service = res.data.data;
-                this.setState(prevState => ({
-                    services: [
-                        ...prevState.services,
-                        { ...service }
-                    ]
-                }));
-                if (res.status === "OK") return true;
-            })
-    }
-
-    editService = (service) => {
-        console.log(service);
-        axiosConfig
-            .patch(`/services/${service.id}`, service)
-            .then(res => {
-                const serviceData = res.data.data;
-                const { id } = serviceData;
-                const newState = this.state.services.map((s) => {
-                    if (s.id === id) return s = serviceData;
-                    return s;
-                });
-                this.setState({
-                    services: [...newState]
-                });
-                if (res.status === "OK") return true;
-            });
-    }
+    
     deleteService = (id) => {
-        const data = { id };
+        // ACTION DELETE
         axiosConfig
             .delete(`/services/${id}`)
             .then(res => {
@@ -60,23 +25,19 @@ class ServiceList extends React.Component {
             });
 
     }
-    // saveService() {
 
-    // }
     componentDidMount() {
-        axiosConfig
-            .get('/services').then(response => {
-                console.log(response.data.data);
-                this.setState({ services: response.data.data });
-            })
-            .catch(() => this.setState({ message: 'NETWORK_ERROR', loading: false }));
+        const { getServices } = this.props;
+        getServices();
     }
 
     render() {
+        const { services, loading } = this.props;
         return (
             <div className={st.container}>
                 <h3 className={st.title}>Добавьте свои услуги</h3>
-                <ServiceForm addService={this.addService} />
+                {loading && <MyLoader />}
+                <ServiceForm_W />
                 <div className={st.grid}>
                     <Service
                         isEditable={false}
@@ -84,8 +45,8 @@ class ServiceList extends React.Component {
                         time="Длительность"
                         price="Стоимость"
                     />
-                    {this.state.services.length === 0 && <div className={st.emptyModal}>"ЭТО ПУСТОЕ СООБЩЕНИЕ"</div>}
-                    {this.state.services.map(({ id, title, time, price }) => (
+                    {services.length === 0 && <div className={st.emptyModal}>Список услуг пуст</div>}
+                    {services.map(({ id, title, time, price }) => (
                         <Service
                             deleteService={this.deleteService}
                             editService={this.editService}
@@ -105,58 +66,23 @@ class ServiceList extends React.Component {
     }
 }
 
-export default ServiceList;
+const mapStateToProps = ({ serviceReducers }) => {
+    const { services, loading } = serviceReducers;
+    return {
+        services: [...services],
+        loading
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        getServices: () => {
+            dispatch(getServices());
+        }
+    }
+}
+const ServiceList_w = connect(mapStateToProps, mapDispatchToProps)(ServiceList);
+export default ServiceList_w;
 
 
 
-
-
-    // // state = { tasks };
-    // constructor(props) {
-    //     super(props);
-    //     this.state =  { tasks };
-    // }
-    // filterActive = () => {
-    //     const activeTasks = this.state.tasks.filter(task => !task.completed);
-    //     this.setState({ tasks: activeTasks });
-    // }
-
-    // toggleCompleted = (event) => {
-    //     const { tasks } = this.state;
-    //     const id = Number(event.target.dataset.id);
-    //     const updatedTasks = tasks.map(task => {
-    //         if (task.id === id) {
-    //             task.completed = !task.completed
-    //         }
-    //         return task;
-    //     });
-    //     this.setState({ tasks: updatedTasks });
-    // }
-
-    // addTask = title => {
-    //     this.setState(prevState => ({
-    //         // взяли старый объект и записали новй
-    //         // но затем будем делать запросы на сервак
-    //         tasks: [
-    //             ...prevState.tasks,
-    //             { id: Math.random(), title, completed: false }
-    //         ]
-    //     }))
-    // }
-    // render() {
-    //     return (
-    //         <div className="tasks-list">
-    //             <TaskForm addTask={this.addTask} />
-    //             {this.state.tasks.map(({ title, completed, id }) => (
-    //                 <Task
-    //                     title={title}
-    //                     completed={completed}
-    //                     toggleCompleted={this.toggleCompleted}
-    //                     id={id}
-    //                     key={id}
-    //                 />
-    //             ))}
-    //             <Button label="Выполненны" onClick={this.filterActive} />
-    //         </div>
-    //     );
-    // }
