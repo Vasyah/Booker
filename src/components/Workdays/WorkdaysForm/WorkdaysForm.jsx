@@ -102,15 +102,22 @@ class WorkdaysForm extends React.Component {
             'saturday',
             'sunday'
         ];
-        const newArr = workDays.map((w) => {
-            const obj = { title: w, st: null, end: null};
+        const newArr = workDays.map((w, i) => {
+            debugger;
+            const obj = {
+                dayNum: i,
+                title: w,
+                st: null,
+                end: null,
+                isSpecial: false
+            };
             arr[0].forEach(a => {
-                if(a[0] === `${w}-st`) {
+                if (a[0] === `${w}-st`) {
                     obj.st = a[1];
                     return;
                 }
-                else if(a[0] === `${w}-end`){
-                    obj.end= a[1];
+                else if (a[0] === `${w}-end`) {
+                    obj.end = a[1];
                     return;
                 }
             })
@@ -175,3 +182,12 @@ class WorkdaysForm extends React.Component {
 //     // id: PropTypes.number.isRequired
 // }
 export default WorkdaysForm;
+
+
+const obj = {
+    dayNum: 1,
+    date: "2020-15-07",
+    st: "8",
+    end: "17",
+    isSpecial: true,
+}

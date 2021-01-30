@@ -20,13 +20,15 @@ input {
 .title {
     font-size: 24px;
     font-weight: bold;
+    margin: 5px 0;
 }
 .field {
+    justify-content: space-evenly;
     & input {
         max-width: 50px;
     }
     & > div {
-        margin: 20px;
+        margin: 5px;
     }
 }
 .flex {

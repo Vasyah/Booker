@@ -6,8 +6,8 @@ import Formsy, { addValidationRule } from 'formsy-react'
 
 import { useState } from 'react';
 import { connect } from 'react-redux';
-import { addService } from "./../../store/actions/addService";
-import { editService } from "./../../store/actions/editService";
+import { addService } from "../../store/actions/services/addService";
+import { editService } from "../../store/actions/services/editService";
 
 const errors = {
     isEmail: 'You have to type a valid email',

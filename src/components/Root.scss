@@ -2,6 +2,9 @@ $azure-color: #98d0c2;
 $blue-color: #6871d1;
 $purple-color: #9b95f0;
 
+*{
+    box-sizing: border-box;
+}
 .input-row{
     display: flex;
     flex-direction: column;

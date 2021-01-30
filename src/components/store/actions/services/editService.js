@@ -2,10 +2,10 @@ import {
     EDIT_SERVICE_SUCCESS,
     EDIT_SERVICE_FAILURE,
     EDIT_SERVICE_STARTED,
-} from '../actions/types';
+} from '../types';
 
-import axiosConfig from '../../../api/index';
-import store from "./../store";
+import axiosConfig from '../../../../api/index';
+import store from "../../store";
 
 
 export const editService = service => {

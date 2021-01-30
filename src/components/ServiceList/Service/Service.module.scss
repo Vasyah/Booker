@@ -25,14 +25,12 @@
         position: relative;
         overflow-wrap: break-word; 
         word-wrap: break-word;
-        // min-width: 150px;
         max-width: 150px;
     }
 }
 
 .flex{
     display: flex;
-    
     &AC{
         align-items: center;
     }

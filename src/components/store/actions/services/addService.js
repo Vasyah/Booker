@@ -2,9 +2,9 @@ import {
     ADD_SERVICE_SUCCESS,
     ADD_SERVICE_FAILURE,
     ADD_SERVICE_STARTED,
-} from '../actions/types';
+} from '../types';
 
-import axiosConfig from '../../../api/index';
+import axiosConfig from '../../../../api/index';
 
 
 

@@ -2,9 +2,9 @@ import {
     GET_SERVICES_SUCCESS,
     GET_SERVICES_FAILURE,
     GET_SERVICES_STARTED,
-} from '../actions/types';
+} from '../types';
 
-import axiosConfig from '../../../api/index';
+import axiosConfig from '../../../../api/index';
 
 export const getServices = () => {
     return dispatch => {

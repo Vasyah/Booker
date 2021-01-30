@@ -6,7 +6,7 @@ import Button from './Button';
 import classNames from 'classnames';
 
 import { connect } from "react-redux";
-import { deleteService } from "./../../store/actions/deleteService";
+import { deleteService } from "../../store/actions/services/deleteService";
 import ServiceForm_W from "./../ServiceForm/ServiceForm";
 class Service extends React.Component {
     state = { isEdit: false };

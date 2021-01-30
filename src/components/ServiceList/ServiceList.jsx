@@ -7,8 +7,8 @@ import ServiceForm_W from './ServiceForm';
 import classNames from 'classnames';
 import axiosConfig from '../../api/';
 import { connect } from 'react-redux';
-import { addService } from "./../store/actions/addService";
-import { getServices } from "./../store/actions/getServices";
+import { addService } from "../store/actions/services/addService";
+import { getServices } from "../store/actions/services/getServices";
 import MyLoader from "./../MyLoader/MyLoader";
 class ServiceList extends React.Component {
     
