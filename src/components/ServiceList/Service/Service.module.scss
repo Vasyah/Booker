@@ -18,7 +18,7 @@
         align-items: center;
         justify-content: center;
         text-align: center;
-        font-size: 18px;
+        font-size: 22px;
         color: white;
         transition-duration: 0.25s;
         font-weight: 300;
@@ -39,7 +39,8 @@
 .abs{
     position: absolute;
     right: 0;
-    transform: translate(100%);
+    top: 50%;
+    transform: translate(100%, -50%);
 }
 .btn {
     position: relative;

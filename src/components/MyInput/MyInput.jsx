@@ -20,7 +20,7 @@ class MyInput extends React.Component {
                     onChange={this.handleChange}
                     type={type}
                 />
-                <span>{errorMessage}</span>
+                <span className={st.errorText}>{errorMessage}</span>
             </div>
         )
     }

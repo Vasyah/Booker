@@ -5,15 +5,17 @@ import st from './Workdays.module.scss';
 import { useState } from 'react';
 import WorkdaysForm from "./WorkdaysForm";
 import Calendar from './Calendar';
-import CalendarAdmin from './CalendarAdmin';
+import CalendarAdmin_W from './CalendarAdmin';
+import WorkdaysForm_W from "./WorkdaysForm/WorkdaysForm";
 
 
 const Workdays = () => {
     return (
-        <>
-            <WorkdaysForm />
+        <>  
+            <h3 className="title">Editing working hours</h3>
+            <WorkdaysForm_W />
             {/* <Calendar /> */}
-            <CalendarAdmin />
+            <CalendarAdmin_W />
         </>
     )
 }

@@ -2,7 +2,7 @@ import React from 'react';
 import st from './Navigation.module.scss';
 import { useState } from 'react';
 import leftArrow from './leftArrow.svg';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 const Navigation = (props) => {
     const [visible, setVisible] = useState(false);
     const toggle = (e) => {
@@ -15,9 +15,9 @@ const Navigation = (props) => {
     return (
         <>
             <nav className={sidebar} id="sidebar">
-                <Link className={st.link} onClick={toggle} to="/">HOME</Link>
-                <Link className={st.link} onClick={toggle} to="/services">SERVICES</Link>
-                <Link className={st.link} onClick={toggle} to="/workdays">WORKDAYS</Link>
+                <NavLink className={st.link} activeClassName={st.active} onClick={toggle} exact to="/">HOME</NavLink>
+                <NavLink className={st.link} activeClassName={st.active} onClick={toggle} to="/services">SERVICES</NavLink>
+                <NavLink className={st.link} activeClassName={st.active} onClick={toggle} to="/workdays">WORKDAYS</NavLink>
                 <button onClick={toggle} className={mobClassFull}>
                     <img src={leftArrow} alt="" />
                 </button>

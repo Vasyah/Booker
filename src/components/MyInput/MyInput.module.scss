@@ -29,11 +29,15 @@
 }
 .sizeXS{
     min-width: 50px;
-    max-width: 50px;;
+    // max-width: 50px;;
 }
 .label{
     display: block;
     margin-bottom: 5px;
     font-size: 20px;
+    
 }
 
+.errorText{
+    font-size: 10px;
+}

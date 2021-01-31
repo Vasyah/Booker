@@ -10,13 +10,14 @@ import { addService } from "../../store/actions/services/addService";
 import { editService } from "../../store/actions/services/editService";
 
 const errors = {
+    isWords: "Не используйте цифры и спец. символы",
     isEmail: 'You have to type a valid email',
     maxLength: 'You cannot type more than 25 characters',
     minLength: 'You must type more than 6 characters',
     isAlpha: 'You can only type letters',
     equalsField: 'Password is not match',
     isStrong: 'Your password is not strong',
-    isNumeric: "Чувак, введи число"
+    isNumeric: "Введите целое число"
 }
 
 class ServiceForm extends React.Component {
@@ -89,9 +90,9 @@ class ServiceForm extends React.Component {
         return (
             <>
                 <Formsy className='form' onValidSubmit={isEdit ? this.onSubmitEdit : this.onSubmit} onValid={this.enableButton} onInvalid={this.disableButton} className={st.grid}>
-                    <MyInput label="Название услуги" type="text" name="title" validations="isWords" validationErrors={errors} placeholder="Введите название..." required />
-                    <MyInput label="Длительность" type="text" name="time" validations="isNumeric" validationErrors={errors} placeholder="Введите название..." required />
-                    <MyInput label="Стоимость" type="text" name="price" validations="isNumeric" validationErrors={errors} placeholder="Введите название..." required />
+                    <MyInput label="Title" type="text" name="title" validations="isWords" validationErrors={errors} placeholder="Введите название..." required />
+                    <MyInput label="Duration" type="text" name="time" validations="isNumeric" validationErrors={errors} placeholder="Введите название..." required />
+                    <MyInput label="Cost" type="text" name="price" validations="isNumeric" validationErrors={errors} placeholder="Введите название..." required />
                     {isEdit ?
                         <div className={st.flex}>
                             <button type="submit" data-type="confirm" className={st.btn} disabled={!this.state.canSubmit}>
@@ -100,7 +101,7 @@ class ServiceForm extends React.Component {
                             <button onClick={this.handler} data-type="cancel" className={st.btn}>❌</button>
                         </div>
                         :
-                        <button data-type="cancel" type="submit" className={st.btn} disabled={!this.state.canSubmit}>Добавить </button>
+                        <button data-type="cancel" type="submit" className={st.btn} disabled={!this.state.canSubmit}>Add</button>
                     }
                 </Formsy>
             </>

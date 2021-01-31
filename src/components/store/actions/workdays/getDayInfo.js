@@ -6,35 +6,42 @@ import {
 
 import axiosConfig from '../../../../api/index';
 
-export const getDayInfo = () => {
-    return dispatch => {
-        dispatch(getServicesStarted());
 
+export const getDayInfo = (dayInfo) => {
+    return dispatch => {
+        dispatch(getDayInfoStarted());
+        if (dayInfo.dayNum === "null") {
+            dispatch(getDayInfoSuccess({ dayNum: null }))
+            return;
+        };
         axiosConfig
-            .get(`/services`)
+            .post(`/workdays/`, dayInfo)
             .then(res => {
-                setTimeout(() => dispatch(getServicesSuccess(res.data.data)), 1000);
+                const { dateVisual, date } = dayInfo;
+                const data = res.data.data;
+                data["dateVisual"] = dateVisual;
+                data["date"] = date;
+                setTimeout(() => dispatch(getDayInfoSuccess(data)), 500);
 
             })
             .catch(err => {
-                dispatch(getServicesFailure(err.message));
+                dispatch(getDayInfoFailure(err.message));
             });
     };
 };
 
-const getServicesSuccess = Services => ({
-    type: GET_SERVICES_SUCCESS,
-    payload: [
-        ...Services
-    ]
+const getDayInfoSuccess = day => ({
+    type: GET_DAYINFO_SUCCESS,
+    payload: day
+
 });
 
-const getServicesStarted = () => ({
-    type: GET_SERVICES_STARTED
+const getDayInfoStarted = () => ({
+    type: GET_DAYINFO_STARTED
 });
 
-const getServicesFailure = error => ({
-    type: GET_SERVICES_FAILURE,
+const getDayInfoFailure = error => ({
+    type: GET_DAYINFO_FAILURE,
     payload: {
         error
     }

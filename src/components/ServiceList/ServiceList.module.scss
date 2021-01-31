@@ -24,6 +24,20 @@ body {
     border-radius: 2px;
     box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.5);
 }
+.alertModal {
+    max-width: 900px;
+    margin: 0 auto;
+    min-height: 50px;
+    font-size: 32px;
+    color: rgb(206, 80, 80);
+    padding: 16px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+    border-radius: 2px;
+    box-shadow: 0 0 15px 0 rgba(223, 38, 38, 0.5);
+}
 
 .grid {
     display: flex;

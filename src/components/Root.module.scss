@@ -10,12 +10,18 @@ $blue-color: #4d5284;
 $purple-color: #9794c4;
 .wrapper {
     // display: grid;
-
-    margin: 0;
-    padding: 0;
-    padding:16px;
     min-height: 100vh;
     background: #50a3a2;
     background: linear-gradient(to bottom right, $azure-color 40%, $purple-color 100%);
+
+    margin: 0;
+    padding: 0;
+    // min-height: 100vh;
     // padding: 16px;
+}
+.inner {
+    padding: 16px;
+    max-width: 1160px;
+    margin:0 auto;
+    position: relative;
 }

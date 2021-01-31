@@ -1,18 +1,13 @@
 import React from 'react';
 import MyInput from '../../MyInput';
-import PropTypes from 'prop-types';
 import st from './WorkdaysForm.module.scss';
-import Formsy, { addValidationRule } from 'formsy-react'
+import Formsy from 'formsy-react'
 import classNames from 'classnames';
-import { useState } from 'react';
+import { postDefaultWorkdays } from "./../../store/actions/workdays/postDefault";
+import { connect } from 'react-redux';
 
 const errors = {
-    isEmail: 'You have to type a valid email',
-    maxLength: 'You cannot type more than 25 characters',
-    minLength: 'You must type more than 6 characters',
-    isAlpha: 'You can only type letters',
     equalsField: 'Password is not match',
-    isStrong: 'Your password is not strong',
     isNumeric: "Целое число от 0-24"
 }
 
@@ -45,11 +40,9 @@ class WorkdaysForm extends React.Component {
     }
 
     disableButton = () => {
-        console.log("DISABLED");
         this.setState({ canSubmit: false })
     }
     enableButton = () => {
-        console.log("ENABLED");
         this.setState({ canSubmit: true })
     }
     onSubmitEdit = (model) => {
@@ -59,15 +52,12 @@ class WorkdaysForm extends React.Component {
         editToggle();
         this.setState({ isEdit: false });
         editService(model)
-        console.log("form posted", model)
     }
     onSubmit = (model) => {
-        // const { addService } = this.props;
-        console.table(model);
-        // console.table();
+        const { postDefaultWorkdays } = this.props;
+        console.log(this.props);
+        postDefaultWorkdays(model);
 
-        // addService(model);
-        // console.log("form posted", model)
     }
 
     handler = (e) => {
@@ -94,22 +84,20 @@ class WorkdaysForm extends React.Component {
     mapInputs = (inputs) => {
         const arr = [Object.entries(inputs)].sort((a, b) => a - b);
         const workDays = [
-            'monday',
-            'tuesday',
-            'wednesday',
-            'thursday',
-            'friday',
-            'saturday',
-            'sunday'
+            'Monday',
+            'Tuesday',
+            'Wednesday',
+            'Thursday',
+            'Friday',
+            'Saturday',
+            'Sunday'
         ];
         const newArr = workDays.map((w, i) => {
-            debugger;
             const obj = {
-                dayNum: i,
+                dayNum: i + 1,
                 title: w,
                 st: null,
                 end: null,
-                isSpecial: false
             };
             arr[0].forEach(a => {
                 if (a[0] === `${w}-st`) {
@@ -123,37 +111,37 @@ class WorkdaysForm extends React.Component {
             })
             return obj;
         })
-        return ({
-            ...newArr
-        })
+        return (newArr)
     }
     render() {
         const { isEdit } = this.props;
         const workDays = [
-            'monday',
-            'tuesday',
-            'wednesday',
-            'thursday',
-            'friday',
-            'saturday',
-            'sunday'
+            'Monday',
+            'Tuesday',
+            'Wednesday',
+            'Thursday',
+            'Friday',
+            'Saturday',
+            'Sunday'
         ];
 
         return (
             <>
-                <Formsy className='form' mapping={this.mapInputs} onValidSubmit={isEdit ? this.onSubmitEdit : this.onSubmit} onValid={this.enableButton} onInvalid={this.disableButton} className={st.grid}>
+                <Formsy className={`${st.grid} form`} mapping={this.mapInputs} onValidSubmit={isEdit ? this.onSubmitEdit : this.onSubmit} onValid={this.enableButton} onInvalid={this.disableButton} >
+                    <div className={st.gridInner}>
                     {workDays.map((w, i) => {
                         return (
+                            
                             <div key={i}>
                                 <p className={classNames(`${st.title}`)}>{w}</p>
                                 <div className={classNames(`${st.flex}`, `${st.field}`)}>
-                                    <MyInput label="C" type="text" name={`${w}-st`} validations="isNumeric" validationErrors={errors} placeholder="" required />
-                                    <MyInput label="До" type="text" name={`${w}-end`} validations="isNumeric" validationErrors={errors} placeholder="" required />
+                                    <MyInput label="from" type="text" name={`${w}-st`} validations="isNumeric" validationErrors={errors} placeholder="" required />
+                                    <MyInput label="to" type="text" name={`${w}-end`} validations="isNumeric" validationErrors={errors} placeholder="" required />
                                 </div>
                             </div>
                         )
-
                     })}
+                    </div>
                     {isEdit ?
                         <div className={st.flex}>
                             <button type="submit" data-type="confirm" className={st.btn} disabled={!this.state.canSubmit}>
@@ -162,32 +150,20 @@ class WorkdaysForm extends React.Component {
                             <button onClick={this.handler} data-type="cancel" className={st.btn}>❌</button>
                         </div>
                         :
-                        <button data-type="cancel" type="submit" className={st.btn} disabled={!this.state.canSubmit}>Добавить </button>
+                        <button data-type="cancel" type="submit" className={st.btn} disabled={!this.state.canSubmit}>Add </button>
                     }
                 </Formsy>
             </>
         )
     }
 }
-// onClick={this.props.handler}
-// WorkdaysForm.propTypes = {
-//     title: PropTypes.string.isRequired,
-//     time: PropTypes.number.isRequired,
-//     price: PropTypes.number.isRequired,
-// }
-// WorkdaysForm.propTypes = {
-//     title: PropTypes.string.isRequired,
-//     completed: PropTypes.bool.isRequired,
-//     toggleCompleted: PropTypes.func.isRequired,
-//     // id: PropTypes.number.isRequired
-// }
-export default WorkdaysForm;
 
-
-const obj = {
-    dayNum: 1,
-    date: "2020-15-07",
-    st: "8",
-    end: "17",
-    isSpecial: true,
+const mapDispatchToProps = dispatch => {
+    return {
+        postDefaultWorkdays: days => dispatch(postDefaultWorkdays({ dates: [...days] }))
+    }
 }
+
+const WorkdaysForm_W = connect(null, mapDispatchToProps)(WorkdaysForm);
+
+export default WorkdaysForm_W;

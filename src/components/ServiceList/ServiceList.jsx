@@ -10,8 +10,9 @@ import { connect } from 'react-redux';
 import { addService } from "../store/actions/services/addService";
 import { getServices } from "../store/actions/services/getServices";
 import MyLoader from "./../MyLoader/MyLoader";
+import locale from '../../locale';
 class ServiceList extends React.Component {
-    
+
     deleteService = (id) => {
         // ACTION DELETE
         axiosConfig
@@ -32,20 +33,24 @@ class ServiceList extends React.Component {
     }
 
     render() {
-        const { services, loading } = this.props;
+        const { serviceList } = locale;
+        const { title } = serviceList;
+        const { services, loading, error } = this.props
+        const emptyModal = services.length === 0 && <div className={st.emptyModal}>Service List is empty</div>;
+        const alertModal = <div className={st.alertModal}>ЧТО-ТО НЕ ТАК С СЕРЕВЕРОМ</div>;
         return (
             <div className={st.container}>
-                <h3 className={st.title}>Добавьте свои услуги</h3>
+                <h3 className="title">{title}</h3>
                 {loading && <MyLoader />}
                 <ServiceForm_W />
                 <div className={st.grid}>
                     <Service
                         isEditable={false}
-                        title="Название услуги"
-                        time="Длительность"
-                        price="Стоимость"
+                        title="Title"
+                        time="Duration"
+                        price="Cost"
                     />
-                    {services.length === 0 && <div className={st.emptyModal}>Список услуг пуст</div>}
+                    {loading ? '' : error === null ? emptyModal : alertModal}
                     {services.map(({ id, title, time, price }) => (
                         <Service
                             deleteService={this.deleteService}
@@ -67,10 +72,11 @@ class ServiceList extends React.Component {
 }
 
 const mapStateToProps = ({ serviceReducers }) => {
-    const { services, loading } = serviceReducers;
+    const { services, loading, error } = serviceReducers;
     return {
         services: [...services],
-        loading
+        loading,
+        error
     }
 }
 

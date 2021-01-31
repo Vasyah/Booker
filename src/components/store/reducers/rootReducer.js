@@ -1,10 +1,12 @@
 
 import { combineReducers } from "redux";
 import serviceReducers from "./serviceReducers";
+import workdaysReducers from "./workdaysReducers";
 
 
 const rootReducer = combineReducers({
-    serviceReducers
+    serviceReducers,
+    workdaysReducers,
 });
 
 export default rootReducer;
