@@ -24,6 +24,7 @@ const CalendarAdmin = (props) => {
 
     const handleDayClick = date => {
         const { getDayInfo } = props;
+        setisEdit(false);
         if (isSameDay(selDate, date)) {
             getDayInfo({ dayNum: "null" });
             setSelDate(null);

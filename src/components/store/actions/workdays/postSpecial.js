@@ -14,7 +14,7 @@ export const postSpecialWorkdays = (specialDay) => {
             .post(`/specialdays`, { "dayInfo": specialDay })
             .then(res => {
                 console.log(res.data.data);
-                setTimeout(() => dispatch(postSpecialWorkdaysSuccess(...res.data.data)), 500);
+                setTimeout(() => dispatch(postSpecialWorkdaysSuccess(res.data.data)), 500);
             })
             .catch(err => {
                 dispatch(postSpecialWorkdaysFailure(err.message));

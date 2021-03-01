@@ -55,7 +55,6 @@ class WorkdaysForm extends React.Component {
     }
     onSubmit = (model) => {
         const { postDefaultWorkdays } = this.props;
-        console.log(this.props);
         postDefaultWorkdays(model);
 
     }

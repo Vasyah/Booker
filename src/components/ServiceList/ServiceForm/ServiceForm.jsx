@@ -1,10 +1,8 @@
 import React from 'react';
 import MyInput from '../../MyInput';
-import PropTypes from 'prop-types';
 import st from './ServiceForm.module.scss';
-import Formsy, { addValidationRule } from 'formsy-react'
+import Formsy from 'formsy-react'
 
-import { useState } from 'react';
 import { connect } from 'react-redux';
 import { addService } from "../../store/actions/services/addService";
 import { editService } from "../../store/actions/services/editService";
@@ -45,11 +43,9 @@ class ServiceForm extends React.Component {
     }
 
     disableButton = () => {
-        console.log("DISABLED");
         this.setState({ canSubmit: false })
     }
     enableButton = () => {
-        console.log("ENABLED");
         this.setState({ canSubmit: true })
     }
     onSubmitEdit = (model) => {
